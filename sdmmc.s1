@@ -1,0 +1,546 @@
+
+/****************************************************************************
+*
+*       SDMMC
+****************************************************************************/
+/****  eMMC   *******/
+.set    _ARG2_REG,              0x20300000
+.set    _BLKSIZECNT_REG,        0x20300004
+.set    _ARG1_REG,              0x20300008
+.set    _CMDTM_REG,             0x2030000C
+.set    _RESP0_REG,             0x20300010
+.set    _RESP1_REG,             0x20300014
+.set    _RESP2_REG,             0x20300018
+.set    _RESP3_REG,             0x2030001C
+.set    _DATA_REG,              0x20300020
+.set    _STATUS_REG,            0x20300024
+.set    _CONTROL0_REG,          0x20300028
+.set    _CONTROL1_REG,          0x2030002C
+.set    _INTERRUPT_REG,         0x20300030
+.set    _IRPT_MASK_REG,         0x20300034
+.set    _IRPT_EN_REG,           0x20300038
+.set    _CONTROL2_REG,          0x2030003C
+.set    _FORCE_IRPT_REG,        0x20300050
+.set    _BOOT_TIMEOUT_REG,      0x20300070
+.set    _DBG_SEL_REG,           0x20300074
+.set    _EXRDFIFO_CFG_REG,      0x20300080
+.set    _EXRDFIFO_EN_REG,       0x20300084
+.set    _TUNE_STEP_REG,         0x20300088
+.set    _TUNE_STEPS_STD_REG,    0x2030008C
+.set    _TUNE_STEPS_DDR_REG,    0x20300090
+.set    _SPI_INT_SPT_REG,       0x203000F0
+.set    _SLOTISR_VER_REG,       0x203000FC
+            __CONSTANT "ARG2_REG",8,"_arg2reg"
+ARG2_REG:           .word   _ARG2_REG
+            __CONSTANT "BLKSIZECNT_REG",14,"_blksizecntreg"
+BLKSIZECNT_REG:     .word   _BLKSIZECNT_REG
+            __CONSTANT "ARG1_REG",8,"_arg1reg"
+ARG1_REG:           .word   0x20300008
+            __CONSTANT "CMDTM_REG",9,"_cmdtmreg"
+CMDTM_REG:          .word   0x2030000C
+            __CONSTANT "RESP0_REG",9,"_resp0reg"
+RESP0_REG:          .word   0x20300010
+            __CONSTANT "RESP1_REG",9,"_resp1reg"
+RESP1_REG:          .word   0x20300014
+            __CONSTANT "RESP2_REG",9,"_resp2reg"
+RESP2_REG:          .word   0x20300018
+            __CONSTANT "RESP3_REG",9,"_resp3reg"
+RESP3_REG:          .word   0x2030001C
+            __CONSTANT "DATA_REG",8,"_datareg"
+DATA_REG:           .word   0x20300020
+            __CONSTANT "STATUS_REG",10,"_statusreg"
+STATUS_REG:         .word   0x20300024
+            __CONSTANT "CONTROL0_REG",12,"_control0reg"
+CONTROL0_REG:       .word   0x20300028
+            __CONSTANT "CONTROL1_REG",12,"_control1reg"
+CONTROL1_REG:       .word   0x2030002C
+            __CONSTANT "INTERRUPT_REG",13,"_interruptreg"
+INTERRUPT_REG:      .word   0x20300030
+            __CONSTANT "IRPT_MASK_REG",13,"_irptmaskreg"
+IRPT_MASK_REG:      .word   0x20300034
+            __CONSTANT "IRPT_EN_REG",11,"_irptenreg"
+IRPT_EN_REG:        .word   0x20300038
+            __CONSTANT "CONTROL2_REG",12,"_control2reg"
+CONTROL2_REG:       .word   0x2030003C
+            __CONSTANT "FORCE_INRT_REG",14,"_forceinrtreg"
+FORCE_IRPT_REG:     .word   0x20300050
+            __CONSTANT "BOOT_TIMEOUT_REG",16,"_boottimeout"
+BOOT_TIMEOUT_REG:   .word   0x20300070
+            __CONSTANT "DBG_SEL_REG",11,"_dbgselreg"
+DBG_SEL_REG:        .word   0x20300074
+            __CONSTANT "EXRDFIFO_CFG_REG",16,"_exrdfifocfgreg"
+EXRDFIFO_CFG_REG:   .word   0x20300080
+            __CONSTANT "EXRDFIFO_EN_REG",15,"_exrdfifoenreg"
+EXRDFIFO_EN_REG:    .word   0x20300084
+            __CONSTANT "TUNE_STEP_REG",13,"_tunestepreg"
+TUNE_STEP_REG:      .word   0x20300088
+            __CONSTANT "TUNE_STEPS_STD_REG",18,"_tunestepsstdreg"
+TUNE_STEPS_STD_REG: .word   0x2030008C
+            __CONSTANT "TUNE_STEPS_DDR_REG",18,"_tunestepsddrreg"
+TUNE_STEPS_DDR_REG: .word   0x20300090
+            __CONSTANT "SPI_INT_SPT_REG",15,"_spiintsptreg"
+SPI_INT_SPT_REG:    .word   0x203000F0
+            __CONSTANT "SLOTISR_VER_REG",15,"_slotisrverreg"
+SLOTISR_VER_REG:    .word   0x203000FC
+
+/************************/
+            __CONSTANT "SEND_IF_COND",12,"_sendifcond"
+SEND_IF_COND:       .word   0x08030010
+            __CONSTANT "Init1",5,"_inii1"
+Init1:              .word   0x00000142
+            __CONSTANT "APP_CMD",7,"_appcmd"
+APP_CMD:            .word   0x37020000
+            __CONSTANT "Amillion",8,"_amillion"
+Amillion:           .word   1000000
+            __CONSTANT "SD_ARGUMENTS",12,"_sdarguments"
+SD_ARGUMENTS:       .word   0x40300000
+            __CONSTANT "DEFAULTS1",9,"_defaults1"
+DEFAULTS1:          .word   0x070F0000
+            __CONSTANT "DEFAULTS2",9,"_defaults2"
+DEFAULTS2:          .word   0x000F0F25
+            __CONSTANT "fiveThou",8,"_fivethou"
+fiveThou:           .word   5000
+@Onemillion:        .word   1000000
+            __CONSTANT "SET_BLOCKLEN",12,"_setblocklen"
+SET_BLOCKLEN:       .word   0x10020010
+            __CONSTANT "SD_BUFFER",9,"_sdbuffer"
+                    .word   SD_BUFFER
+            __CONSTANT "READ_SINGLE_BLOCK",16,"_readsingleblock"
+READ_SINGLE_BLOCK:  .word   0x11380010
+            __CONSTANT "ALL_SEND_CID",12,"_allsendcid"
+ALL_SEND_CID:       .word   0x02010010
+            __CONSTANT "SD_SEND_OP_COND",15,"_sdsendopcond"
+SD_SEND_OP_COND:    .word   0x29020000
+            __CONSTANT "SEND_RELATIVE_ADDR",18,"_sendrelativeaddr"
+SEND_RELATIVE_ADDR: .word   0x031A0000
+            __CONSTANT "SEND_CSD",8,"_sendscd"
+SEND_CSD:           .word   0x09010000
+            __CONSTANT "SELECT_DESELECT_CARD",20,"_selectdeselectcard"
+SELECT_DESELECT_CARD: .word  0x071B0000
+            __CONSTANT "INPTMASK",8,"_inptmask"
+INPTMASK:           .word   0xFFFFFFFF
+oneSecond:          .word   1000000
+
+.set        Srstcmd,    0x20000000
+
+.set        Cmdinhibit, 1
+
+
+.section    .text
+.align 2
+GPFSEL4:    .word   0x20200010
+GPFSEL5:    .word   0x20200014
+SETEMMC1:   .word   0x24900000
+SETEMMC2:   .word   0x00000924
+/** Set GPIO for emmc **/
+            __CODE "GPIO>EMMC",9,"_gpiotoemmc"
+            ldr     r0,GPFSEL4
+            ldr     r1,SETEMMC1
+            str     r1,[r0]
+            ldr     r0,GPFSEL5
+            ldr     r1,SETEMMC2
+            str     r1,[r0]
+            next
+
+/***** Initial SDcard *no input***output r0 = 0 no errors***/
+/*** InSD ( -- 0|error)  ***/
+            __CODE "InSD",4,"_insd"
+label InitialSDcard
+            push    {r10-r12}
+            bl      SdhciDefaultSetup
+            bl      Delay1000
+            ldr     r2,Init1
+            ldr     r1,SEND_IF_COND
+            bl      SendCMD
+            bl      Delay1000
+/***** Are we OK?  *****/
+            bl      GetResp0
+            cmp     r0,r2
+            blne    SdhciDefaultSetup
+/***** SEND_IF_COND  *****/
+            bl      Delay1000
+            bl      GetDelayFunction
+            ldr     r1,Amillion
+            add     r0,r0,r1
+            ldr     r1,=DELAY_TIME
+            mov     r6,r0
+/***** APP_CMD ****/
+APP_CMD_Loop:
+            mov     r2,#0
+            ldr     r1,APP_CMD
+            bl      SendCMD
+            bl      Delay1000           @ delay 1 millisecond
+            bl      GetResp0
+            ldr     r2,SD_ARGUMENTS
+            ldr     r1,SD_SEND_OP_COND
+            bl      SendCMD
+            bl      Delay1000
+
+ /****  Test  time out  (Error 1)   ****/
+            mov     r7,#1               @ 1 = SD_SEND_OP_COND error
+            bl      GetDelayFunction
+            cmp     r0,r6
+            bgt     InitialSDcardError
+
+            bl      GetResp0
+            tst     r0,#0x80000000
+            beq     APP_CMD_Loop
+
+            bl      Delay1000
+            mov     r2,#0
+            ldr     r1,ALL_SEND_CID
+            bl      SendCMD
+            bl      Delay1000
+
+/**** Get CID   ****/
+            ldr     r0,RESP0_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP0_REG_STORE
+            str     r0,[r1]
+
+            ldr     r0,RESP1_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP1_REG_STORE
+            str     r0,[r1]
+
+            ldr     r0,RESP2_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP2_REG_STORE
+            str     r0,[r1]
+
+            ldr     r0,RESP3_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP3_REG_STORE
+            str     r0,[r1]
+            bl      GetResp0
+
+/*** SEND_RELATIVE_ADDR (one)   ****/
+            mov     r2,#0
+            ldr     r1,SEND_RELATIVE_ADDR
+            bl      SendCMD
+            bl      GetResp0
+            bl      Delay1000
+
+/*** SEND_RELATIVE_ADDR (two)   ****/
+            mov     r2,#0
+            ldr     r1,SEND_RELATIVE_ADDR
+            bl      SendCMD
+            bl      GetResp0
+            mov     r0,r0,lsr #16
+            ldr     r1,=RESP0_REG_STORE_RCA
+            str     r0,[r1]
+            bl      Delay1000
+
+/*** SEND_CSD   *****/
+            ldr     r1,=RESP0_REG_STORE_RCA
+            ldr     r2,[r1]
+            mov     r2,r2,lsl #16
+            ldr     r1,SEND_CSD
+            bl      SendCMD
+            bl      GetResp0
+            bl      Delay1000
+
+/*** Read CSD  *****/
+            ldr     r0,RESP0_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP0_REG_STORE_CSD
+            str     r0,[r1]
+
+            ldr     r0,RESP1_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP1_REG_STORE_CSD
+            str     r0,[r1]
+
+            ldr     r0,RESP2_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP2_REG_STORE_CSD
+            str     r0,[r1]
+
+            ldr     r0,RESP3_REG
+            ldr     r0,[r0]
+            ldr     r1,=RESP3_REG_STORE_CSD
+            str     r0,[r1]
+
+            bl      Delay1000
+
+/**** SELECT/DESELECT   ****/
+
+            ldr     r1,=RESP0_REG_STORE_RCA
+            ldr     r2,[r1]
+            mov     r2,r2,lsl #16
+            ldr     r1,SELECT_DESELECT_CARD
+            bl      SendCMD
+
+            cmp     r0,#0
+            bne     InitialSDcardError
+            bl      Delay1000
+/****  SET_BLOCKLEN   *****/
+            mov     r2,#512          @ set block lenght to 512
+            ldr     r1,SET_BLOCKLEN
+            bl      SendCMD
+            bl      Delay1000
+
+            ldr     r1,BLKSIZECNT_REG
+            mov     r0,#512
+            str     r0,[r1]
+            mov     r0,#0
+            b       2f
+/*** Error */
+InitialSDcardError:
+            mov     r0,r7
+2:          pop     {r10-r12}
+            pushr0
+
+/*** SdhciDefaultSetup  ***/
+            __CODE "SDFS",4,"_sdfs"
+            bl      SdhciDefaultSetup
+            next
+
+SdhciDefaultSetup:
+            push    {r10-r12,lr}
+            ldr     r0,CONTROL1_REG
+            ldr     r1,DEFAULTS1
+            str     r1,[r0]
+            bl      Delay1000
+
+            ldr     r0,CONTROL1_REG
+            mov     r1,#0x000F0000
+            str     r1,[r0]
+            bl      Delay1000
+
+            ldr     r0,CONTROL0_REG
+            mov     r1,#0x00100000
+            str     r1,[r0]
+
+            ldr     r0,CONTROL1_REG
+            ldr     r1,DEFAULTS2
+            str     r1,[r0]
+            str     r1,[r0]
+
+            ldr     r0,CONTROL2_REG
+            mov     r1,#0
+            str     r1,[r0]
+
+            ldr     r0,IRPT_MASK_REG
+            ldr     r1,INPTMASK
+            str     r1,[r0]
+
+            ldr     r0,fiveThou
+            bl      DelayFunction
+/**** G0_IDLE_STATE     *****/
+            mov     r2,#0
+            mov     r1,#0
+            bl      SendCMD
+            pop     {r10-r12,pc}
+
+
+/****** ReadSingleBlock ****/
+/*  Input:
+        r0 = Sector Address * 512
+    Output:
+        r0 = 0 no errors
+        r0 <> 0 error code
+*****************************/
+/*** READSBLOCK ( addr -- 0|error )  ****/
+            __CODE "READSBLOCK",10,"_readsblock"
+ReadSingleBlock:
+            pop     {r0}
+            push    {r10-r12}
+            ldr     r3,=READ_COUNT
+            mov     r4,#0
+            str     r4,[r3]
+            mov     r2,r0
+            ldr     r1,READ_SINGLE_BLOCK
+            bl      SendCMD    @ set sector address
+            mov     r4,#0
+            bl      GetDelayFunction
+            ldr     r1,Amillion
+            add     r0,r0,r1
+            ldr     r1,=DELAY_TIME
+            str     r0,[r1]
+            mov     r6,r0
+BUF_READ_LOOP:
+/** Test time out  (error 2)  */
+            mov     r7,#2
+            bl      GetDelayFunction
+            cmp     r0,r6
+            bgt     ErrorRSB
+/*** test for Bufread bit  **/
+            add     r4,r4,#1
+            ldr     r0,RESP0_REG
+            ldr     r0,[r0]
+            tst     r0,#0x00800
+            beq     BUF_READ_LOOP           @ not set
+INTERRUPT_LOOP:
+/***   Test time out   (Error 3 )   ***/
+            mov     r7,#3
+            bl      GetDelayFunction
+            cmp     r0,r6
+            bgt     ErrorRSB
+/** test for Readrdy bit     **/
+            ldr     r0,INTERRUPT_REG
+            ldr     r0,[r0]
+            tst     r0,#0x00020
+            beq     INTERRUPT_LOOP
+/***  Read DATA  ***/
+            ldr     r0,DATA_REG
+            ldr     r0,[r0]
+            str     r0,[r8],#4
+/*** have we read 512 bytes ?  ***/
+            subs    r9,#1
+            bgt     BUF_READ_LOOP
+            mov     r0,#0
+            b       1f
+ErrorRSB:   mov     r0,r7
+1:          pop     {r10-r12}
+            pushr0
+
+
+/*** GETRESP0  ( -- r0 )  ***/
+            __CODE "GETRESP0",8,"_getresp0"
+            bl      GetResp0
+            pushr0
+/*** GetResp0  reponse returned in r0 ****/
+GetResp0:   ldr     r0,RESP0_REG
+            ldr     r0,[r0]
+            mov     pc,lr
+
+/*** GETRESP ( -- resp0 resp1 resp2 resp3 )*****/
+            __CODE "GETRESP",7,"_getresp"
+            ldr     r3,RESP0_REG
+            add     r3,#12
+            mov     r4,#4
+1:          ldr     r0,[r3],#-4
+            push    {r0}
+            subs    r4,#1
+            bne     1b
+            next
+/*** SENDCMD ( arg cmd -- n3 )  */
+            __CODE "SENDCMD",7,"_sendcmd"
+            pop     {r1}
+            pop     {r2}
+            bl      SendCMD
+            pushr0
+/*** SendCMD  command in r1 arguments in r2 *****/
+SendCMD:    push    {r10-r12,lr}
+            ldr     r0,STATUS_REG
+            ldr     r0,[r0]
+            tst     r0,#Cmdinhibit      @ command inhibit bit
+            beq     CmdinhibitOK
+            ldr     r0,CONTROL1_REG
+            mov     r1,#Srstcmd
+            str     r1,[r0]
+
+/*** time out timer  ***/
+            bl      GetDelayFunction
+            ldr     r1,oneSecond
+            add     r0,r0,r1
+            ldr     r1,=DELAY_TIME
+            str     r0,[r1]
+            mov     r6,r0
+Srstcmd_NOT_OK_LOOP:
+            mov     r7,#4
+            bl      GetDelayFunction
+            cmp     r0,r6
+            bgt     SendCMD_Error
+            ldr     r0,CONTROL1_REG
+            ldr     r0,[r0]
+            tst     r0,#Srstcmd
+            bne     Srstcmd_NOT_OK_LOOP
+Cmdinhibit_not_OK:
+            mov     r7,#5
+            bl      GetDelayFunction
+            cmp     r0,r6
+            bgt     SendCMD_Error
+            ldr     r0,STATUS_REG
+            ldr     r0,[r0]
+            tst     r0,#Cmdinhibit
+            bne     Cmdinhibit_not_OK
+CmdinhibitOK:
+            ldr     r0,ARG1_REG
+            str     r2,[r0]
+            ldr     r0,CMDTM_REG
+            str     r1,[r0]
+            mov     r0,#0
+            pop     {r10-r12,pc}
+SendCMD_Error:
+            mov     r0,r7
+            pop     {r10-r12,pc}
+
+/***** DelayFunction**********************/
+ARM_TIMER_CTL:  .word   0x2000B408
+ARM_TIMER_CNT:  .word   0x2000B420
+TimerVar1:      .word   0x00F90000
+TimerVar2:      .word   0x00F90200
+/* Delay = r0 ; 1000000 = 1 second  */
+Delay1000:  mov     r0,#1000
+label DelayFunction
+            push    {r10-r12,lr}
+            ldr     r1,ARM_TIMER_CTL
+            ldr     r2,TimerVar1
+            str     r2,[r1]
+            ldr     r2,TimerVar2
+            str     r2,[r1]
+            ldr     r1,ARM_TIMER_CNT
+            ldr     r2,[r1]
+            add     r2,r2,r0
+1:          ldr     r3,[r1]
+            cmp     r3,r2
+            blt     1b
+            pop     {r10-r12,pc}
+/***** DelayFunction end **********************/
+/*** GetDelayFunction  ************************/
+/**** return r0 = timer number  ***************/
+GetDelayFunction:
+            push    {r10-r12,lr}
+            ldr     r1,ARM_TIMER_CTL
+            ldr     r2,TimerVar1
+            str     r2,[r1]
+            ldr     r2,TimerVar2
+            str     r2,[r1]
+            ldr     r1,ARM_TIMER_CNT
+            ldr     r0,[r1]
+            pop     {r10-r12,pc}
+/*** GetDelayFunction  end ********************/
+/**** DELAYFUNCTION ( n -- )  ***/
+            __CODE "DELAYFUNCTION",13,"_delayfunction"
+            pop     {r0}
+            bl      DelayFunction
+            next
+/**** GETDELAYFUNCTION ( -- n )  ***/
+            __CODE "GETDELAYFUNCTION",16,"_getdelayfunction"
+            bl      GetDelayFunction
+            pushr0
+
+.section        .data
+.align 2
+
+RESP0_REG_STORE:    .word   0x0
+RESP1_REG_STORE:    .word   0x0
+RESP2_REG_STORE:    .word   0x0
+RESP3_REG_STORE:    .word   0x0
+RESP0_REG_STORE_RCA: .word   0x0
+RESP0_REG_STORE_CSD: .word   0x0
+RESP1_REG_STORE_CSD: .word   0x0
+RESP2_REG_STORE_CSD: .word   0x0
+RESP3_REG_STORE_CSD: .word   0x0
+READ_COUNT:         .word   0x0
+DELAY_TIME:         .word   0x0
+SD_BUFFER:          .rept   512
+                    .byte   0
+                    .endr
+SD_BUFFER_END:      .word   0x0
+
+/****  SD  *****/
+            __COLON "SD",2,"_sd"
+            .word   _plitp
+            .word   0x20300000
+            .word   _plitp
+            .word   0x100
+            .word   _dumpw
+            .word   _exit
+
+            __CONSTANT "RSP0REG!",8,"_rsporegstore"
+            .word   RESP0_REG_STORE
+
+/***************************************************************************/

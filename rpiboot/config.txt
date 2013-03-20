@@ -1,0 +1,4 @@
+kernel_old=1
+test_mode=1
+arm_freq=800
+config_hdmi_boost=4
