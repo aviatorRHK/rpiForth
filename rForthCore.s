@@ -471,7 +471,7 @@ $ticktib:   .word   .totib                  @$
             .word   $view
             __VARIABLE "#TIB",4,"_hashtib"
             .word   $hashtib
-            __VARIABLE "files-LINK",9,"_files_link"
+            __VARIABLE "FILE-LINK",9,"_file_link"
             .word   $fileslink
             __VARIABLE "SPAN",4,"_span"
             .word   $span
@@ -1658,7 +1658,7 @@ regx:       .word regs
             pushr0
 $wd:        .word   $word
 
-/*[ ( == ) "left-bracket"   $*/
+/*[ ( -- ) "left-bracket"   $*/
 /* : [  INTERPRET  ; IMMEDIATE */
             __COLON "[",1,"_ltbracket",immediate
             .word   _interpret
@@ -1925,9 +1925,9 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
 /* : MARKER ( ,name -- ) ( when name is executed after name will be
                           deleted including name )
      CREATE ONLY FORTH ALSO DEFINITIONS
-     ROMPT @ , RAMPT @ , FILES-LINK  @ , HIDE VOC-LINK @ DUP ,
+     ROMPT @ , RAMPT @ , ((( FILES-LINK  @ , ))) HIDE VOC-LINK @ DUP ,
      BEGIN DUP WHILE DUP 4- @ @ , @ REPEAT REVEAL
-     DOES> LENGTH ROMPT ! LENGTH RAMPT !  LENGTH FILES-LINK !
+     DOES> LENGTH ROMPT ! LENGTH RAMPT ! ((( LENGTH FILES-LINK ! )))
      LENGTH SWAP >R  DUP VOC-LINK !
      BEGIN DUP WHILE DUP 4- @  R> LENGTH SWAP >R SWAP ! @ REPEAT
      R> 2DROP ['] NOOP IS STATUS  ; */
@@ -1939,9 +1939,9 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   _rampt
             .word   _fetch
             .word   _comma
-            .word   _files_link
+/*          .word   _file_link
             .word   _fetch
-            .word   _comma
+            .word   _comma   */
             .word   _hide
             .word   _voc_link
             .word   _fetch
@@ -1967,9 +1967,9 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   _length
             .word   _rampt
             .word   _store
-            .word   _length
-            .word   _files_link
-            .word   _store
+/*          .word   _length
+            .word   _file_link
+            .word   _store   */
             .word   _length
             .word   _swap
             .word   _tor
