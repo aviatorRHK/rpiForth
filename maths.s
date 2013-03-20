@@ -7,7 +7,6 @@
 *
 *	maths.s contains the rountines for mathematics.
 ******************************************************************************/
-
 /* 
 * DivideU32 Divides one unsigned 32 bit number in r0 by another in r1 and 
 * returns the result in r0 and the remainder in r1.
