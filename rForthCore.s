@@ -8,6 +8,7 @@
 * 20130115 Project restarted on a Raspberry Pi  
 * 20130309 moved return stack and parameter stack per memory map .sp0;.rp0
 * 20130310 __CODE instead of __COLON for the word CHAR.
+* 20130320 repair DOES>. and MARKER
 **************************************************************************/
 .global rForthCore
         .code   32
@@ -1939,9 +1940,9 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   _rampt
             .word   _fetch
             .word   _comma
-/*          .word   _file_link
+            .word   _file_link
             .word   _fetch
-            .word   _comma   */
+            .word   _comma   
             .word   _hide
             .word   _voc_link
             .word   _fetch
@@ -1960,16 +1961,17 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   1b
 2:          .word   _drop
             .word   _reveal
-            .word   _doesgt
-            .word   _length
+            .word   _psccodep
+            .word   0xEB000000|((_dodoes - . - 4)/4 & 0x00FFFFFF) 
+            .word   _length         @DOES> EXECUTES HERE LINK POINTS HERE
             .word   _rompt
             .word   _store
             .word   _length
             .word   _rampt
             .word   _store
-/*          .word   _length
+            .word   _length
             .word   _file_link
-            .word   _store   */
+            .word   _store   
             .word   _length
             .word   _swap
             .word   _tor
@@ -2090,8 +2092,6 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
 
 /*SOURCE-ID  ( -- 0|-1) 0 User Input device | -1 string  */
 
-/*SPAN ( -- a-addr )
-
 /* : TIB     ( -- adr )   'TIB @  ; */
             __COLON "TIB",3,"_tib"
             .word   _ticktib
@@ -2116,14 +2116,6 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   _underplus
             .word   _exit
 
-/* : GETGPU ( -- addr ) ;  */
-/*            __CODE "getgpu"6,"_getgpu"
-            ldr     r0,=graphicsAddress
-            ldr     r0,[r0]            
-            ldr     r0,[r0,#32]
-            pushr   r0,sp
-            mov     pc,lr
-*/
 
 /* : SKIP  ( addr len char -- addr' len' )  */   
             __CODE "SKIP",4,"_skip"
@@ -2188,21 +2180,6 @@ _ccforth:   .word   _beep,      _beep,      _beep,      _beep
             .word   _pisp
             .word   _undefined
             .word   _exit
-
-/* : (CREATE)   ( -- ) BL WORD   HEAD,  ; */
-/*            __COLON "(CREATE)",8,"_pcreatep"
-            .word   _bl
-            .word   _word
-            .word   _headcomma
-            .word   _exit  */
-
-/* : (CREATE0)   ( -- ) BL WORD  ?UPPERCASE  HEAD0,  ; */
-/*            __COLON "_pcreate0p",9,"(CREATE0)"
-            .word   _bl
-            .word   _word
-            .word   _quppercase
-            .word   _head0comma
-            .word   _exit */
 
 /* : (ERROR)  ( -- )
       BLK @ IF  BEEP  >IN @ 1- BLK @ WHERE  THEN ; */
@@ -3166,7 +3143,6 @@ _UPPER:     cmp     r0,#97        @ 97 = 'a'
             .word   _0branch
             .word   1b
             .word   _exit
-
 
 
 .section .text
@@ -4985,7 +4961,7 @@ $_branch:   ldr     ip,[ip]  @ $
             pushr0
 
 
-/* DOES>  ( )  "does"  */
+/*& DOES>  ( )  "does"  */
 /* : DOES>   ( -- )   POSTPONE (;CODE)   0xEB000000 (BL) 
   [ DODOES ] LITERAL   HERE 4+ - DUP ABS 0xFE000000  AND
 ABORT" Out of range of dodoes"  + ,   ; IMMEDIATE */
@@ -4998,16 +4974,13 @@ ABORT" Out of range of dodoes"  + ,   ; IMMEDIATE */
             .word   _here
             .word   _4plus
             .word   _minus
-            .word   _dup
-            .word   _abs
-            .word   _plitp
-            .word   0xFE000000
-            .word   _and
-            .word   _pabortqp;.byte 22;.ascii "Out of range of dodoes";.align 2
-2:          .word   _plitp
             .word   _4slash
+            .word   _plitp
+            .word   0x00FFFFFF
+            .word   _and
+            .word   _plitp
             .word   0xEB000000
-            .word   _plus
+            .word   _or
             .word   _comma
             .word   _exit
 
@@ -5175,7 +5148,6 @@ label _testx
             .word   0x5D
             .word   _emit
             .word   _end
-
 
 /*  BUFFER ( -- addr )*/
             __CODE "BUFFER",6,"_buffer"
