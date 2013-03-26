@@ -9,5 +9,6 @@ A Forth Operating System for Raspberry Pi
 
 I am using .S for include files and have set Eclipse to recognize both .s and .S files. This way, Eclipse will function the same way on both files.
 Roland
-
+20130326 -- Continuing to make progress with sdmmc.S.  I moved a copy of my makefile to the rpiboot folder. Note I changed a few things. I chanaged the source file to git and added some switches to $(LIST) for trouble shooting.
+Roland
 
