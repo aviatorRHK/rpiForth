@@ -13,7 +13,7 @@ ARMGNU ?= arm-none-eabi
 BUILD = build/
 
 # The directory in which source files are stored.
-SOURCE = git/
+SOURCE = ../
 
 # The name of the output file to generate.
 TARGET = kernel.img

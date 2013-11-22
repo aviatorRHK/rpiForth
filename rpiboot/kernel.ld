@@ -9,7 +9,7 @@ SECTIONS {
 	/*
 	* First and formost we need the .init section, containing the IVT.
 	*/
-	.init 0x0000 : {
+	.init 0x8000 : {
 		*(.init)
 	} = 0x3F3F3F3F
 		
@@ -17,7 +17,7 @@ SECTIONS {
 	* We allow room for the ATAGs and the stack and then start our code at
 	* 0x8000.
 	*/
-	.text 0x8000 : {
+	.text 0x9000 : {
 		*.c.o(.text)
 		*(.text)
 	} = 0x3F3F3F3F

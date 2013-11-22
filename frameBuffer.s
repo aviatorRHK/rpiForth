@@ -64,7 +64,7 @@ InitialiseFrameBuffer:
 
 	push {r4,lr}			
 	fbInfoAddr .req r4
-	ldr fbInfoAddr,=FrameBufferInfo
+	ldr fbInfoAddr,=FrameBufferInfo+0x40000000
 	str width,[r4,#0]
 	str height,[r4,#4]
 	str width,[r4,#8]
