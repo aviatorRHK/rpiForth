@@ -1,4 +1,5 @@
-kernel_old=1
+kernel_old=0
 test_mode=1
 arm_freq=800
-config_hdmi_boost=4
+hdmi_mode=16
+disable_overscan=1
